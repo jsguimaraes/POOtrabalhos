@@ -11,9 +11,21 @@ class MaquinaAguaConfiguravel {
     private int agua;
 
     MaquinaAguaConfiguravel(int capacidadeAgua, int capacidadeCopos200, int capacidadeCopos300) {
+        if(capacidadeAgua <= 0){
+            throw new IllegalArgumentException("Capacidade de Água deve ser positiva");
+        }
+        if(capacidadeCopos200 <= 0){
+            throw new IllegalArgumentException("Capacidade de Copos200 deve ser positiva");
+        }
+        if(capacidadeCopos300 <= 0){
+            throw new IllegalArgumentException("Capacidade de Copos300 deve ser positiva");
+        }
         this.capacidadeAgua = capacidadeAgua;
         this.capacidadeCopos200 = capacidadeCopos200;
         this.capacidadeCopos300 = capacidadeCopos300;
+        this.agua = 0;
+        this.copos200 = 0;
+        this.copos300 = 0;
     }
     
     int agua() {
@@ -48,10 +60,25 @@ class MaquinaAguaConfiguravel {
     }
 
     void servirCopo200() {
-        if(agua > 0 && copos200 > 0){
-            copos200--;
-            agua-=200;
+        if(agua < 200){
+            throw new IllegalStateException("Não há água suficiente");
         }
+        if(copos200 <= 0){
+            throw new IllegalStateException("Não há copos de 200ml");
+        }
+        copos200--;
+        agua -=200;
+    }
+
+    void servirCopo300() {
+        if(agua < 300){
+            throw new IllegalStateException("Não há água suficiente");
+        }
+        if(copos300 <= 0){
+            throw new IllegalStateException("Não há copos de 300ml");
+        }
+        copos300--;
+        agua -=300;
     }
 
 
